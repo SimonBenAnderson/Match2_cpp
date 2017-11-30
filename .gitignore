@@ -4,3 +4,13 @@
 
 # Ignore any executables
 bin/*
+build/*
+
+# Ignore CMake directory
+CMakeFiles/*
+
+# Ignore VS Code
+.vscode/*
+
+# custom ignore
+personalNotes.md
