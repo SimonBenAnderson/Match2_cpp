@@ -164,7 +164,7 @@
                     }
                     // need to set the itter to the begining as we are using the same itter to loop through all the players in the game.
                     playerItter = players.begin();
-                    std::cout << "\nPlay another?"<<'\n';
+                    std::cout << "\nPlay another (y/n)?"<<'\n';
                     std::cin >> restart;
                     if (restart=='y')
                     {
