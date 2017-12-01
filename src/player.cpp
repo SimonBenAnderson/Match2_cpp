@@ -14,7 +14,7 @@ public:
 
 Player::Player()
 {
-    name = "N\A";
+    name = "NA";
     score = 0;
 }
 

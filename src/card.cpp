@@ -1,4 +1,7 @@
 
+char CARD_FACE_TYPE[] = {'J','K','Q','A'};
+char CARD_BACK[] = {'x'};
+
 class Card
 {
     bool faceUp;
@@ -13,6 +16,7 @@ public:
     bool isFaceUp();
     void setFaceUp(bool vis);
     std::string representation();
+    bool operator == (Card card);
 };
 
 // constructors
@@ -29,13 +33,23 @@ Card::Card(int id)
 {
     this->cardID = id;
     faceUp = false;
-    cardFace = 'F';
+    cardFace = CARD_FACE_TYPE[id];
     cardBack = 'B';
+}
+
+bool Card::operator==(Card card)
+{
+    if (cardID == card.getCardId())
+    {
+        return true;
+    }
+    return false;
 }
 
 void Card::setCardId(int id)
 {
     this->cardID = id;
+    cardFace = CARD_FACE_TYPE[id];
 }
 
 int Card::getCardId()
@@ -57,7 +71,7 @@ void Card::setFaceUp(bool vis)
 std::string Card::representation()
 {
     std::string repr="[";
-    
+
     // card doesn't exist in play
     if (cardID == -1)
     {
