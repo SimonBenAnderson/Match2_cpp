@@ -39,7 +39,7 @@
          {
              std::cout << "Player "<< i << " Name : ";
              std::cin >> name;
-             if (name.length() >= 3)
+             if (name.length() >= 2)
              {
                  Player newPlayer(name);
                  players.push_back(newPlayer);
@@ -153,17 +153,18 @@
                 }
 
                 system("CLS");
-                std::cout <<"Face Down : "<<board.getFaceDownCardCount() << '\n';
                 if (board.getFaceDownCardCount()==0 && gameover==false)
                 {
                     gameover=true;
 
-                    std::cout << "Game Over " << '\n';
+                    std::cout << "\n\n\n\t\tGame Over " << '\n';
                     for (playerItter = players.begin(); playerItter != players.end(); ++playerItter)
                     {
-                        std::cout << (*playerItter).getName() <<" : "<<(*playerItter).getScore()<<'\n';
+                        std::cout << "\t\t"<< (*playerItter).getName() <<" : "<<(*playerItter).getScore()<<'\n';
                     }
-                    std::cout << "Play another?"<<'\n';
+                    // need to set the itter to the begining as we are using the same itter to loop through all the players in the game.
+                    playerItter = players.begin();
+                    std::cout << "\nPlay another?"<<'\n';
                     std::cin >> restart;
                     if (restart=='y')
                     {
