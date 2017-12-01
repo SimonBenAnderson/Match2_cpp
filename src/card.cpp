@@ -13,6 +13,7 @@ public:
     Card(int id);
     void setCardId(int id);
     int getCardId();
+    char getCardFace();
     bool isFaceUp();
     void setFaceUp(bool vis);
     std::string representation();
@@ -85,8 +86,13 @@ std::string Card::representation()
     }
     else
     {
-        repr += cardBack;
+        repr += ' ';//cardBack;
     }
     repr.append("]");
     return repr;
+}
+
+char Card::getCardFace()
+{
+    return this-> cardFace;
 }

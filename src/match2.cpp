@@ -23,6 +23,7 @@
      std::vector<Player> players;
      int totalPlayers = 0;
      bool gameover = false;
+     char restart; //restart the game 'y' or 'n'
 
      // Get Player amount
      // TODO: Add in integer check, to make sure an int is input
@@ -69,10 +70,7 @@
      }
 
      board.initCards();
-     board.draw();
 
-     // TODO: Game loop, which asks for input from the player
-     // TODO: Game handles logic
      bool turnComplete = false; // stores when the players turn is complete.
      int revealCount = 0;   // counts how many cards the player has revealed in there go, 1s card or second card
      std::string revealInput;   // the input of the card location you want to show.
@@ -84,20 +82,35 @@
          // player turn loop
          for (playerItter = players.begin(); playerItter != players.end(); ++playerItter)
          {
+             //resetting so the next player has a turn
+             turnComplete = false;
+
              // player move loop
-             while(turnComplete ==false)
+             while((turnComplete == false)&&(gameover==false))
              {
-                 std::cout << playerItter -> getName() << ", what location would you like to reveal? : ";
+                 system("CLS");
+                 board.draw();
+                 std::cout <<"Score:"<<playerItter->getScore()<<" "<< playerItter -> getName() << ", what location would you like to reveal? : ";
                  std::cin >> revealInput;
+                 //force quit
+                 if(revealInput=="q" || revealInput=="x")
+                 {
+                     turnComplete=true;
+                     gameover=true;
+                     break;
+                 }
+                 //converts string position into usable integers
                  size_t pos = boardSize.find('x');
                  if (pos != 4294967295)  // did not error
                  {
                      std::stringstream( revealInput.substr(0, pos) ) >> row;
                      std::stringstream( revealInput.substr(pos+1, revealInput.length()) ) >> column;
                  }
+
                  if ( board.flipCard(row-1, column-1) )
                  {
                      revealCount+=1;
+                     system("CLS");
                      board.draw();
                  }
                  // if first card selected, we store it
@@ -105,26 +118,61 @@
                  {
                      selectedCard = board.getCard(row-1, column-1);
                  }
-                 // two cards have been revealed, time to stop the turn
+                 // two cards have been revealed, time to compare and see if we need to stop the turn
                 if( revealCount == 2)
                 {
                     // Check cards are equal
-                    if (selectedCard == board.getCard(row-1, column-1))
+                    if ((*selectedCard) == (*board.getCard(row-1, column-1)))
                     {
                         // Add point to players score
                         (*playerItter).addScore(1);
                         // player gets another go to find more cards
                         revealCount = 0;
+
+                        // display output information, and wait for key to be pressed
+                        std::cout << "Got A Match" << '\n';
+                        std::cout <<playerItter->getName()<<" : "<< playerItter->getScore() << '\n';
+                        std::cin.ignore();
+                        getchar();
                     }
                     else
                     {
+                        // As cards were not a match hides them
+                        selectedCard->setFaceUp(false);
+                        selectedCard = board.getCard(row-1, column-1);
+                        selectedCard->setFaceUp(false);
+
                         revealCount = 0;
                         turnComplete = true;
+
+                        // display output information, and wait for key to be pressed
+                        std::cout << "No Match found" << '\n';
+                        std::cin.ignore();
+                        getchar();
+                    }
+                }
+
+                system("CLS");
+                std::cout <<"Face Down : "<<board.getFaceDownCardCount() << '\n';
+                if (board.getFaceDownCardCount()==0 && gameover==false)
+                {
+                    gameover=true;
+
+                    std::cout << "Game Over " << '\n';
+                    for (playerItter = players.begin(); playerItter != players.end(); ++playerItter)
+                    {
+                        std::cout << (*playerItter).getName() <<" : "<<(*playerItter).getScore()<<'\n';
+                    }
+                    std::cout << "Play another?"<<'\n';
+                    std::cin >> restart;
+                    if (restart=='y')
+                    {
+                        gameover=false;
+                        board.resetBoard();
                     }
                 }
              }
          }
-         gameover=true;
      }
      return 0;
  }

@@ -25,6 +25,7 @@ public:
     void clearCards();
     void draw();
     Card* getCard(int row, int column);
+    int getFaceDownCardCount();
 };
 Board::Board()
 {
@@ -44,7 +45,7 @@ Board::Board(int rows, int columns)
 
 Card* Board::getCard(int row, int column)
 {
-    return &cards[column][row];
+    return &cards[row][column];
 }
 
 /*
@@ -170,4 +171,21 @@ void Board::draw()
         std::cout << '\n';
     }
     std::cout << "\n===============================" <<'\n';
+}
+
+int Board::getFaceDownCardCount()
+{
+    int faceDown = 0;
+    for(int i =0; i < cards.size(); i++)
+    {
+        for(int j =0; j < cards[i].size(); j++)
+        {
+            if (cards[i][j].isFaceUp()==false)
+            {
+                faceDown+=1;
+            }
+        }
+    }
+    faceDown-=emptyCards;
+    return faceDown;
 }
