@@ -15,6 +15,8 @@
 #include "player.cpp"
 #include "board.cpp"
 
+void pauseScreen();
+
  int main()
  {
      system("CLS"); // clear the screen
@@ -100,11 +102,11 @@
                      break;
                  }
                  //converts string position into usable integers
-                 size_t pos = boardSize.find('x');
+                 size_t pos = revealInput.find('x');
                  if (pos != 4294967295)  // did not error
                  {
                      std::stringstream( revealInput.substr(0, pos) ) >> row;
-                     std::stringstream( revealInput.substr(pos+1, revealInput.length()) ) >> column;
+                     std::stringstream( revealInput.substr(pos+1, revealInput.length()-(pos+1)) ) >> column;
                  }
 
                  if ( board.flipCard(row-1, column-1) )
@@ -132,8 +134,7 @@
                         // display output information, and wait for key to be pressed
                         std::cout << "Got A Match" << '\n';
                         std::cout <<playerItter->getName()<<" : "<< playerItter->getScore() << '\n';
-                        std::cin.ignore();
-                        getchar();
+                        pauseScreen();
                     }
                     else
                     {
@@ -147,8 +148,7 @@
 
                         // display output information, and wait for key to be pressed
                         std::cout << "No Match found" << '\n';
-                        std::cin.ignore();
-                        getchar();
+                        pauseScreen();
                     }
                 }
 
@@ -177,3 +177,9 @@
      }
      return 0;
  }
+
+void pauseScreen()
+{
+    std::cin.ignore();
+    getchar();
+}
