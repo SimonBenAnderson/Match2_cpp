@@ -18,14 +18,18 @@
 
 ***
 ### Build
-This project is using all vanilla C++ and no 3rd party modules or extensions. You should be able to compile this with any C++ compiler.
-Build the file **match2.cpp**, then run match2 compiled file.
+ - This project is using all vanilla C++ and no 3rd party modules or extensions.
+ - You should be able to compile this with any C++ compiler.
+  - Build the file **match2.cpp**
+  - then run match2 compiled file.
 ***
 
 ## TODO
- [ ] Setup CMAKE builder.
- [ ] Setup Tests for specific components
- [ ] Implement a save / load feature (high score/ in game exit)
+|complete| description|
+|--------| -----------|
+| | Setup CMAKE builder.|
+| | Setup Tests for specific components|
+| | Implement a save / load feature (high score/ in game exit)|
 
 ***
 ### BUG
